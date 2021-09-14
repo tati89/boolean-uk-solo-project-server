@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = ["referentialActions"]
+}
+
+enum Role {
+  user
+  admin
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  firsName String
+  lastName String
+  password String
+  username String @unique
+  agreedToNews Boolean
+  phone String ?
+  email String ?
+  role     Role    @default(user)
+  bookings Booking []
+  orders Order []
+  reviews Review []
+  basket Basket []
+}
+
+model Category {
+  id       Int     @id @default(autoincrement())
+  name String
+  items Item []
+}
+
+model Item {
+  id       Int     @id @default(autoincrement())
+  name String
+  price Float
+  description String
+  img String
+  vegetarian Boolean
+  category_ID Int
+  category  Category  @relation(fields: [category_ID], references: [id], onDelete: Cascade)
+  basketItem BasketItem[]
+}
+
+model BasketItem {
+  id       Int     @id @default(autoincrement())
+  qty Int
+  basket_ID Int
+  item_ID Int
+  basket          Basket       @relation(fields: [basket_ID], references: [id], onDelete: Cascade)
+  item          Item       @relation(fields: [item_ID], references: [id], onDelete: Cascade)
+  order Order []
+
+}
+
+model Basket {
+  id       Int     @id @default(autoincrement())
+  user_ID Int
+  items BasketItem []
+  user User @relation(fields: [user_ID], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id       Int     @id @default(autoincrement())
+  date String
+  content String
+  user_ID Int
+  user          User       @relation(fields: [user_ID], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id       Int     @id @default(autoincrement())
+  date String
+  total Float
+  shippingAddress String ?
+  user_ID Int
+  items BasketItem[]
+  user          User       @relation(fields: [user_ID], references: [id], onDelete: Cascade)
+}
+
+model Booking {
+  id       Int     @id @default(autoincrement())
+  date String
+  time String
+  guests Int
+  user_ID Int
+  user          User       @relation(fields: [user_ID], references: [id], onDelete: Cascade)
+  @@unique([date, time])
+}
+
