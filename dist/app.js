@@ -8,12 +8,14 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
 //import routes
+const router_1 = __importDefault(require("./resources/users/router"));
 var app = (0, express_1.default)();
 app.use(logger("dev"));
 app.use(express_1.default.json());
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 //run routes
+app.use("/users", router_1.default);
 app.all("*", (req, res) => {
     res.status(404).json("No route match");
 });

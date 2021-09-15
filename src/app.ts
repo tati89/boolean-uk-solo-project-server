@@ -5,6 +5,7 @@ const cors = require("cors");
 import { Request, Response } from "express-serve-static-core";
 
 //import routes
+import usersRouter from "./resources/users/router";
 
 var app = express();
 
@@ -14,6 +15,7 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 
 //run routes
+app.use("/users", usersRouter);
 
 app.all("*", (req: Request, res: Response) => {
   res.status(404).json("No route match");
