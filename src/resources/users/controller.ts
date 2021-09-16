@@ -6,6 +6,7 @@ export const getUsers = async (req: Request, res: Response) => {
     const users = await userClient.findMany();
     res.json({ data: users });
   } catch (error) {
+    console.error(error);
     res.json({ error });
   }
 };
@@ -16,6 +17,7 @@ export const addUser = async (req: Request, res: Response) => {
     const created = await userClient.createWithHash(newUser);
     res.json({ data: created });
   } catch (error) {
+    console.error(error);
     res.json({ error });
   }
 };

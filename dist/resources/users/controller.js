@@ -20,6 +20,7 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json({ data: users });
     }
     catch (error) {
+        console.error(error);
         res.json({ error });
     }
 });
@@ -31,6 +32,7 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json({ data: created });
     }
     catch (error) {
+        console.error(error);
         res.json({ error });
     }
 });
