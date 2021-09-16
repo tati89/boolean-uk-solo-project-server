@@ -4,8 +4,18 @@ var logger = require("morgan");
 const cors = require("cors");
 import { Request, Response } from "express-serve-static-core";
 
+declare global {
+  namespace Express {
+    interface Request {
+      currentUserId: number;
+    }
+  }
+}
+
 //import routes
 import usersRouter from "./resources/users/router";
+
+import authRouter from "./resources/auth/router";
 
 var app = express();
 
@@ -15,6 +25,7 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 
 //run routes
+app.use(authRouter);
 app.use("/users", usersRouter);
 
 app.all("*", (req: Request, res: Response) => {

@@ -21,3 +21,18 @@ export const addUser = async (req: Request, res: Response) => {
     res.json({ error });
   }
 };
+
+export const getUser = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+
+  try {
+    const user = await userClient.findUnique({
+      where: {
+        id,
+      },
+    });
+    res.json({ data: user });
+  } catch (error) {
+    res.json({ error });
+  }
+};
