@@ -1,7 +1,7 @@
 import { User } from ".prisma/client";
 import { createToken, validateToken } from "../../utils/authGenrator";
-import { findUserWithValidation, findUnique } from "./service";
-import { json, Request, Response } from "express";
+import { findUserWithValidation, findUnique, userClient } from "./service";
+import { Request, Response } from "express";
 
 export const login = async (req: Request, res: Response) => {
   const userCredentials: User = req.body;
@@ -32,6 +32,32 @@ export async function logout(req: Request, res: Response) {
   res.clearCookie("token");
   res.json({ msg: "Succesfully logged out", data: null });
 }
+
+export const signUp = async (req: Request, res: Response) => {
+  const newUser: User = req.body;
+
+  try {
+    //1 create user with hash password
+    //2 create token
+    const createdUser = await userClient.createWithHash(newUser);
+
+    const token = createToken({
+      id: createdUser.id,
+    });
+
+    res.cookie("token", token, { httpOnly: true });
+
+    res.json({
+      data: {
+        id: createdUser.id,
+        username: createdUser.username,
+      },
+    });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};
 
 export async function validateLoggedInToken(req: Request, res: Response) {
   const token = req.cookies.token;

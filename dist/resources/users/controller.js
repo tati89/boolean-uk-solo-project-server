@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUser = exports.addUser = exports.getUsers = void 0;
-const service_1 = __importDefault(require("./service"));
+exports.getUser = exports.getUsers = void 0;
+const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield service_1.default.findMany();
+        const users = yield dbClient_1.default.user.findMany();
         res.json({ data: users });
     }
     catch (error) {
@@ -25,22 +25,10 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getUsers = getUsers;
-const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = req.body;
-    try {
-        const created = yield service_1.default.createWithHash(newUser);
-        res.json({ data: created });
-    }
-    catch (error) {
-        console.error(error);
-        res.json({ error });
-    }
-});
-exports.addUser = addUser;
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
     try {
-        const user = yield service_1.default.findUnique({
+        const user = yield dbClient_1.default.user.findUnique({
             where: {
                 id,
             },

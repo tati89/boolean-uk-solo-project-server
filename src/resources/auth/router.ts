@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { addUser } from "../users/controller";
-import { login, logout, validateLoggedInToken } from "./controller";
+import { login, logout, validateLoggedInToken, signUp } from "./controller";
 
 const router = Router();
 
@@ -10,7 +9,7 @@ router.route("/login").post(login);
 
 router.route("/logout").get(logout);
 
-router.route("/signup").post(addUser);
+router.route("/signup").post(signUp);
 
 router.route("/validate-token").get(validateLoggedInToken);
 

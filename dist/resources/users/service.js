@@ -14,6 +14,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 const bcrypt_1 = require("bcrypt");
+// export type NewUser = {
+//   firstName: string;
+//   lastName: string;
+//   password: string;
+//   username: string;
+//   agreedToNews: boolean;
+//   avatar: string;
+//   phone?: string;
+//   email?: string;
+// };
 const createWithHash = (newUser) => __awaiter(void 0, void 0, void 0, function* () {
     const textPassword = newUser.password;
     const hashedPassword = yield (0, bcrypt_1.hash)(textPassword, 10);

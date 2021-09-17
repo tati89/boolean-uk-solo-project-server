@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findUnique = exports.findUserWithValidation = void 0;
+exports.findUnique = exports.userClient = exports.findUserWithValidation = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 const bcrypt_1 = require("bcrypt");
 const findUserWithValidation = (data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,4 +27,13 @@ const findUserWithValidation = (data) => __awaiter(void 0, void 0, void 0, funct
     return foundUser;
 });
 exports.findUserWithValidation = findUserWithValidation;
+const createWithHash = (newUser) => __awaiter(void 0, void 0, void 0, function* () {
+    const textPassword = newUser.password;
+    const hashedPassword = yield (0, bcrypt_1.hash)(textPassword, 10);
+    const savedUser = yield dbClient_1.default.user.create({
+        data: Object.assign(Object.assign({}, newUser), { password: hashedPassword }),
+    });
+    return savedUser;
+});
+exports.userClient = Object.assign(Object.assign({}, dbClient_1.default.user), { createWithHash });
 exports.findUnique = dbClient_1.default.user.findUnique;

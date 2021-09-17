@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateLoggedInToken = exports.logout = exports.login = void 0;
+exports.validateLoggedInToken = exports.signUp = exports.logout = exports.login = void 0;
 const authGenrator_1 = require("../../utils/authGenrator");
 const service_1 = require("./service");
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,6 +42,29 @@ function logout(req, res) {
     });
 }
 exports.logout = logout;
+const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const newUser = req.body;
+    try {
+        //1 create user with hash password
+        //2 create token
+        const createdUser = yield service_1.userClient.createWithHash(newUser);
+        const token = (0, authGenrator_1.createToken)({
+            id: createdUser.id,
+        });
+        res.cookie("token", token, { httpOnly: true });
+        res.json({
+            data: {
+                id: createdUser.id,
+                username: createdUser.username,
+            },
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+exports.signUp = signUp;
 function validateLoggedInToken(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const token = req.cookies.token;
