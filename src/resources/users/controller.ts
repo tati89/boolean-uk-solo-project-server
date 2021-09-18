@@ -25,3 +25,20 @@ export const getUser = async (req: Request, res: Response) => {
     res.json({ error });
   }
 };
+
+export const deleteUser = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+
+  try {
+    const deletedUser = await dbClient.user.delete({
+      where: {
+        id,
+      },
+    });
+
+    res.json({ data: "success" });
+  } catch (error) {
+    console.error(error);
+    res.json({ error });
+  }
+};

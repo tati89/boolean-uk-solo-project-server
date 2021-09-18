@@ -14,8 +14,8 @@ declare global {
 
 //import routes
 import usersRouter from "./resources/users/router";
-
 import authRouter from "./resources/auth/router";
+import itemsRouter from "./resources/items/router";
 
 var app = express();
 
@@ -27,6 +27,7 @@ app.use(cookieParser());
 //run routes
 app.use(authRouter);
 app.use("/users", usersRouter);
+app.use("/items", itemsRouter);
 
 app.all("*", (req: Request, res: Response) => {
   res.status(404).json("No route match");

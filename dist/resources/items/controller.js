@@ -12,47 +12,44 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.getUser = exports.getUsers = void 0;
+exports.deleteItem = exports.addItem = exports.getAllMenu = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
-const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllMenu = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield dbClient_1.default.user.findMany();
-        res.json({ data: users });
+        const menu = yield dbClient_1.default.item.findMany();
+        res.json({ data: menu });
     }
     catch (error) {
         console.error(error);
         res.json({ error });
     }
 });
-exports.getUsers = getUsers;
-const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = Number(req.params.id);
+exports.getAllMenu = getAllMenu;
+const addItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const newItem = req.body;
     try {
-        const user = yield dbClient_1.default.user.findUnique({
-            where: {
-                id,
-            },
+        const added = yield dbClient_1.default.item.create({
+            data: Object.assign({}, newItem),
         });
-        res.json({ data: user });
-    }
-    catch (error) {
-        res.json({ error });
-    }
-});
-exports.getUser = getUser;
-const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = Number(req.params.id);
-    try {
-        const deletedUser = yield dbClient_1.default.user.delete({
-            where: {
-                id,
-            },
-        });
-        res.json({ data: "success" });
+        res.json({ data: added });
     }
     catch (error) {
         console.error(error);
         res.json({ error });
     }
 });
-exports.deleteUser = deleteUser;
+exports.addItem = addItem;
+const deleteItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = Number(req.params.id);
+    try {
+        const removed = yield dbClient_1.default.item.delete({
+            where: { id },
+        });
+        res.json({ data: "Successfully removed from the system" });
+    }
+    catch (error) {
+        console.error(error);
+        res.json({ error });
+    }
+});
+exports.deleteItem = deleteItem;
