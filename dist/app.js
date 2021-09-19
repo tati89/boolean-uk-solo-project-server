@@ -11,6 +11,7 @@ const cors = require("cors");
 const router_1 = __importDefault(require("./resources/users/router"));
 const router_2 = __importDefault(require("./resources/auth/router"));
 const router_3 = __importDefault(require("./resources/items/router"));
+const router_4 = __importDefault(require("./resources/categories/router"));
 var app = (0, express_1.default)();
 app.use(logger("dev"));
 app.use(express_1.default.json());
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(router_2.default);
 app.use("/users", router_1.default);
 app.use("/items", router_3.default);
+app.use("/categories", router_4.default);
 app.all("*", (req, res) => {
     res.status(404).json("No route match");
 });
