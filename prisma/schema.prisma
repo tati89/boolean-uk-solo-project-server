@@ -67,7 +67,7 @@ model BasketItem {
 model Basket {
   id       Int     @id @default(autoincrement())
   user_ID Int
-  items BasketItem []
+  items  BasketItem [] 
   user User @relation(fields: [user_ID], references: [id], onDelete: Cascade)
 }
 
