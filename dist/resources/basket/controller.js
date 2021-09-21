@@ -12,8 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBasket = exports.addBasket = void 0;
+exports.deleteBasket = exports.addBasket = exports.getUserBasket = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
+const getUserBasket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = Number(req.params.id);
+    try {
+        const foundBasket = yield dbClient_1.default.basket.findUnique({
+            where: { id },
+            include: { items: true },
+        });
+        res.json({ data: foundBasket });
+    }
+    catch (error) {
+        console.error(error);
+        res.json({ error });
+    }
+});
+exports.getUserBasket = getUserBasket;
 const addBasket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newBasket = req.body;
     try {
