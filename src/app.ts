@@ -19,6 +19,7 @@ import itemsRouter from "./resources/items/router";
 import categoriesRouter from "./resources/categories/router";
 import basketRouter from "./resources/basket/router";
 import basketItemsRouter from "./resources/basketItems/router";
+import ordersRouter from "./resources/orders/router";
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use("/items", itemsRouter);
 app.use("/categories", categoriesRouter);
 app.use("/basket", basketRouter);
 app.use("/basket-items", basketItemsRouter);
+app.use("/orders", ordersRouter);
 
 app.all("*", (req: Request, res: Response) => {
   res.status(404).json("No route match");
