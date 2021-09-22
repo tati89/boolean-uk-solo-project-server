@@ -1,9 +1,15 @@
 import { Router } from "express";
-import { getUserBasket, addBasket, deleteBasket } from "./controller";
+import {
+  getUserBasket,
+  getBasket,
+  addBasket,
+  deleteBasket,
+} from "./controller";
 
 const router = Router();
 
-router.get("/:id", getUserBasket);
+router.get("/:user_ID", getBasket);
+router.post("/:user_ID", getUserBasket);
 router.post("/", addBasket);
 router.delete("/:id", deleteBasket);
 

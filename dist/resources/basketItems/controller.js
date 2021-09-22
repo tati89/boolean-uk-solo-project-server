@@ -69,7 +69,7 @@ const addItemOrIncreaseQty = (req, res) => __awaiter(void 0, void 0, void 0, fun
 exports.addItemOrIncreaseQty = addItemOrIncreaseQty;
 const updateItemQty = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
-    const { qty } = req.body;
+    //   const { qty } = req.body;
     try {
         const foundItem = yield dbClient_1.default.basketItem.findUnique({
             where: { id },
@@ -77,11 +77,13 @@ const updateItemQty = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         if (foundItem) {
             const updatedItem = yield dbClient_1.default.basketItem.update({
                 where: { id },
-                data: Object.assign(Object.assign({}, foundItem), { qty: (foundItem === null || foundItem === void 0 ? void 0 : foundItem.qty) - Number(qty) }),
+                data: Object.assign(Object.assign({}, foundItem), { qty: (foundItem === null || foundItem === void 0 ? void 0 : foundItem.qty) - 1 }),
             });
             res.json({ data: updatedItem });
         }
-        res.json({ msg: `No ${id} found` });
+        else {
+            res.json({ msg: `No ${id} found` });
+        }
     }
     catch (error) {
         console.error(error);

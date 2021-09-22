@@ -12,16 +12,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBasket = exports.addBasket = exports.getUserBasket = void 0;
+exports.deleteBasket = exports.addBasket = exports.getUserBasket = exports.getBasket = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
-const getUserBasket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = Number(req.params.id);
+const getBasket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user_ID = Number(req.params.user_ID);
     try {
-        const foundBasket = yield dbClient_1.default.basket.findUnique({
-            where: { id },
+        const foundBasket = yield dbClient_1.default.basket.findFirst({
+            where: { user_ID },
             include: { items: true },
         });
         res.json({ data: foundBasket });
+    }
+    catch (error) {
+        console.error(error);
+        res.json({ error });
+    }
+});
+exports.getBasket = getBasket;
+const getUserBasket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user_ID = Number(req.params.user_ID);
+    const basketToCreate = req.body;
+    try {
+        const foundBasket = yield dbClient_1.default.basket.findFirst({
+            where: { user_ID },
+            include: { items: true },
+        });
+        if (!foundBasket) {
+            const newBasket = yield dbClient_1.default.basket.create({
+                data: Object.assign({}, basketToCreate),
+            });
+            res.json({ data: newBasket });
+        }
+        else {
+            res.json({ data: foundBasket });
+        }
     }
     catch (error) {
         console.error(error);

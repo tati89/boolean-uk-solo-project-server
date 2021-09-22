@@ -58,7 +58,8 @@ export const addItemOrIncreaseQty = async (req: Request, res: Response) => {
 
 export const updateItemQty = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
-  const { qty } = req.body;
+  //   const { qty } = req.body;
+
   try {
     const foundItem = await dbClient.basketItem.findUnique({
       where: { id },
@@ -69,12 +70,13 @@ export const updateItemQty = async (req: Request, res: Response) => {
         where: { id },
         data: {
           ...foundItem,
-          qty: foundItem?.qty - Number(qty),
+          qty: foundItem?.qty - 1,
         },
       });
       res.json({ data: updatedItem });
+    } else {
+      res.json({ msg: `No ${id} found` });
     }
-    res.json({ msg: `No ${id} found` });
   } catch (error) {
     console.error(error);
     res.json({ error });

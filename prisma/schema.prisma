@@ -66,7 +66,7 @@ model BasketItem {
 
 model Basket {
   id       Int     @id @default(autoincrement())
-  user_ID Int
+  user_ID Int 
   items  BasketItem [] 
   user User @relation(fields: [user_ID], references: [id], onDelete: Cascade)
 }
@@ -81,7 +81,7 @@ model Review {
 
 model Order {
   id       Int     @id @default(autoincrement())
-  date String
+  date DateTime @default("2020-03-19T14:21:00+02:00")
   total Float
   shippingAddress String ?
   user_ID Int
