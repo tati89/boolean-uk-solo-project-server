@@ -44,6 +44,7 @@ export const getUserBasket = async (req: Request, res: Response) => {
 
 export const addBasket = async (req: Request, res: Response) => {
   const newBasket = req.body;
+
   try {
     const added = await dbClient.basket.create({
       data: { ...newBasket },

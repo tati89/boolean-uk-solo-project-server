@@ -21,10 +21,10 @@ app.use(express_1.default.json());
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 //run routes
-app.use(router_2.default);
 app.use("/users", router_1.default);
 app.use("/items", router_3.default);
 app.use("/categories", router_4.default);
+app.use(router_2.default);
 app.use("/basket", router_5.default);
 app.use("/basket-items", router_6.default);
 app.use("/orders", router_7.default);

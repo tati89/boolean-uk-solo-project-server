@@ -7,7 +7,7 @@ import { Request, Response } from "express-serve-static-core";
 declare global {
   namespace Express {
     interface Request {
-      currentUserId: number;
+      currentUser: User;
     }
   }
 }
@@ -20,6 +20,7 @@ import categoriesRouter from "./resources/categories/router";
 import basketRouter from "./resources/basket/router";
 import basketItemsRouter from "./resources/basketItems/router";
 import ordersRouter from "./resources/orders/router";
+import { User } from ".prisma/client";
 
 var app = express();
 
@@ -29,10 +30,11 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 
 //run routes
-app.use(authRouter);
+
 app.use("/users", usersRouter);
 app.use("/items", itemsRouter);
 app.use("/categories", categoriesRouter);
+app.use(authRouter);
 app.use("/basket", basketRouter);
 app.use("/basket-items", basketItemsRouter);
 app.use("/orders", ordersRouter);

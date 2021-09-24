@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrder = exports.getOrders = exports.createOrder = void 0;
+exports.getOrdersById = exports.deleteOrder = exports.getOrders = exports.createOrder = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user_ID = Number(req.params.user_ID);
@@ -62,3 +62,19 @@ const deleteOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.deleteOrder = deleteOrder;
+const getOrdersById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user_ID = Number(req.params.user_ID);
+    try {
+        const orders = yield dbClient_1.default.order.findMany({
+            where: {
+                user_ID,
+            },
+        });
+        res.json({ data: orders });
+    }
+    catch (error) {
+        console.error(error);
+        res.json({ error });
+    }
+});
+exports.getOrdersById = getOrdersById;

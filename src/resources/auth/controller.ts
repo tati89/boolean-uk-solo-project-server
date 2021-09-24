@@ -20,6 +20,11 @@ export const login = async (req: Request, res: Response) => {
       data: {
         id: loggedUser.id,
         username: loggedUser.username,
+        fisrtName: loggedUser.firstName,
+        lastName: loggedUser.lastName,
+        phone: loggedUser.phone,
+        email: loggedUser.email,
+        avatar: loggedUser.avatar,
       },
     });
   } catch (error) {

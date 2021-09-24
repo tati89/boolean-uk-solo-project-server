@@ -46,3 +46,18 @@ export const deleteOrder = async (req: Request, res: Response) => {
     res.json({ error });
   }
 };
+
+export const getOrdersById = async (req: Request, res: Response) => {
+  const user_ID = Number(req.params.user_ID);
+  try {
+    const orders = await dbClient.order.findMany({
+      where: {
+        user_ID,
+      },
+    });
+    res.json({ data: orders });
+  } catch (error) {
+    console.error(error);
+    res.json({ error });
+  }
+};

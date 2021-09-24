@@ -9,7 +9,8 @@ exports.default = (req, res, next) => {
     }
     if (payload) {
         //create new property and store payload in it
-        req.currentUserId = payload.id;
+        req.currentUser = payload;
+        // req.currentUserId = (payload as any).id;
         //continue normal go through routes
         next();
     }

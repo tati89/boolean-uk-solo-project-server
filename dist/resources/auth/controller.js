@@ -26,6 +26,11 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             data: {
                 id: loggedUser.id,
                 username: loggedUser.username,
+                fisrtName: loggedUser.firstName,
+                lastName: loggedUser.lastName,
+                phone: loggedUser.phone,
+                email: loggedUser.email,
+                avatar: loggedUser.avatar,
             },
         });
     }
