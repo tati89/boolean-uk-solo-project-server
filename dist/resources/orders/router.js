@@ -5,6 +5,7 @@ const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.post("/:user_ID", controller_1.createOrder);
 router.get("/", controller_1.getOrders);
+router.patch("/:id", controller_1.updateOrder);
 router.get("/:user_ID", controller_1.getOrdersById);
 router.delete("/:id", controller_1.deleteOrder);
 exports.default = router;

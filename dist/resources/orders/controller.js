@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOrdersById = exports.deleteOrder = exports.getOrders = exports.createOrder = void 0;
+exports.updateOrder = exports.getOrdersById = exports.deleteOrder = exports.getOrders = exports.createOrder = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user_ID = Number(req.params.user_ID);
@@ -78,3 +78,27 @@ const getOrdersById = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.getOrdersById = getOrdersById;
+const updateOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = Number(req.params.id);
+    const newStatus = req.body;
+    try {
+        const foundOrder = yield dbClient_1.default.order.findUnique({
+            where: { id },
+        });
+        if (foundOrder) {
+            const updatedOrder = yield dbClient_1.default.order.update({
+                where: { id },
+                data: Object.assign(Object.assign({}, foundOrder), newStatus),
+            });
+            res.json({ msg: updatedOrder });
+        }
+        else {
+            res.json({ msg: `ID ${id} not found` });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.json({ error });
+    }
+});
+exports.updateOrder = updateOrder;

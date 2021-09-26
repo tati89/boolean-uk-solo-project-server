@@ -61,3 +61,30 @@ export const getOrdersById = async (req: Request, res: Response) => {
     res.json({ error });
   }
 };
+
+export const updateOrder = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  const newStatus = req.body;
+
+  try {
+    const foundOrder = await dbClient.order.findUnique({
+      where: { id },
+    });
+
+    if (foundOrder) {
+      const updatedOrder = await dbClient.order.update({
+        where: { id },
+        data: {
+          ...foundOrder,
+          ...newStatus,
+        },
+      });
+      res.json({ msg: updatedOrder });
+    } else {
+      res.json({ msg: `ID ${id} not found` });
+    }
+  } catch (error) {
+    console.error(error);
+    res.json({ error });
+  }
+};
