@@ -26,7 +26,11 @@ export const createOrder = async (req: Request, res: Response) => {
 
 export const getOrders = async (req: Request, res: Response) => {
   try {
-    const orders = await dbClient.order.findMany();
+    const orders = await dbClient.order.findMany({
+      orderBy: {
+        id: "asc",
+      },
+    });
     res.status(200).json({ data: orders });
   } catch (error) {
     console.error(error);
@@ -54,6 +58,9 @@ export const getOrdersById = async (req: Request, res: Response) => {
       where: {
         user_ID,
       },
+      orderBy: {
+        id: "asc",
+      },
     });
     res.json({ data: orders });
   } catch (error) {
@@ -64,7 +71,8 @@ export const getOrdersById = async (req: Request, res: Response) => {
 
 export const updateOrder = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
-  const newStatus = req.body;
+  const info = req.body;
+  console.log(info);
 
   try {
     const foundOrder = await dbClient.order.findUnique({
@@ -76,10 +84,10 @@ export const updateOrder = async (req: Request, res: Response) => {
         where: { id },
         data: {
           ...foundOrder,
-          ...newStatus,
+          status: info.status,
         },
       });
-      res.json({ msg: updatedOrder });
+      res.json({ data: updatedOrder });
     } else {
       res.json({ msg: `ID ${id} not found` });
     }

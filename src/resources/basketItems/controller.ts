@@ -3,7 +3,11 @@ import dbClient from "../../utils/dbClient";
 
 export const getItems = async (req: Request, res: Response) => {
   try {
-    const allInBasket = await dbClient.basketItem.findMany();
+    const allInBasket = await dbClient.basketItem.findMany({
+      orderBy: {
+        id: "asc",
+      },
+    });
     res.json({ data: allInBasket });
   } catch (error) {
     console.error(error);
@@ -67,7 +71,9 @@ export const updateItemQty = async (req: Request, res: Response) => {
 
     if (foundItem) {
       const updatedItem = await dbClient.basketItem.update({
-        where: { id },
+        where: {
+          id,
+        },
         data: {
           ...foundItem,
           qty: foundItem?.qty - 1,

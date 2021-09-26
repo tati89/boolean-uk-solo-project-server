@@ -39,7 +39,11 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.createOrder = createOrder;
 const getOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const orders = yield dbClient_1.default.order.findMany();
+        const orders = yield dbClient_1.default.order.findMany({
+            orderBy: {
+                id: "asc",
+            },
+        });
         res.status(200).json({ data: orders });
     }
     catch (error) {
@@ -69,6 +73,9 @@ const getOrdersById = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             where: {
                 user_ID,
             },
+            orderBy: {
+                id: "asc",
+            },
         });
         res.json({ data: orders });
     }
@@ -80,7 +87,8 @@ const getOrdersById = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.getOrdersById = getOrdersById;
 const updateOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
-    const newStatus = req.body;
+    const info = req.body;
+    console.log(info);
     try {
         const foundOrder = yield dbClient_1.default.order.findUnique({
             where: { id },
@@ -88,9 +96,9 @@ const updateOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (foundOrder) {
             const updatedOrder = yield dbClient_1.default.order.update({
                 where: { id },
-                data: Object.assign(Object.assign({}, foundOrder), newStatus),
+                data: Object.assign(Object.assign({}, foundOrder), { status: info.status }),
             });
-            res.json({ msg: updatedOrder });
+            res.json({ data: updatedOrder });
         }
         else {
             res.json({ msg: `ID ${id} not found` });

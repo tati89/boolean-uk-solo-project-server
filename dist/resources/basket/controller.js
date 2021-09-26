@@ -19,7 +19,13 @@ const getBasket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const foundBasket = yield dbClient_1.default.basket.findFirst({
             where: { user_ID },
-            include: { items: true },
+            include: {
+                items: {
+                    orderBy: {
+                        id: "asc",
+                    },
+                },
+            },
         });
         res.json({ data: foundBasket });
     }

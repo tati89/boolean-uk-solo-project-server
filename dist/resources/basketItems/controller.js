@@ -16,7 +16,11 @@ exports.deleteItem = exports.updateItemQty = exports.addItemOrIncreaseQty = expo
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 const getItems = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const allInBasket = yield dbClient_1.default.basketItem.findMany();
+        const allInBasket = yield dbClient_1.default.basketItem.findMany({
+            orderBy: {
+                id: "asc",
+            },
+        });
         res.json({ data: allInBasket });
     }
     catch (error) {
@@ -76,7 +80,9 @@ const updateItemQty = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
         if (foundItem) {
             const updatedItem = yield dbClient_1.default.basketItem.update({
-                where: { id },
+                where: {
+                    id,
+                },
                 data: Object.assign(Object.assign({}, foundItem), { qty: (foundItem === null || foundItem === void 0 ? void 0 : foundItem.qty) - 1 }),
             });
             res.json({ data: updatedItem });

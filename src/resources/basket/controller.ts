@@ -7,7 +7,13 @@ export const getBasket = async (req: Request, res: Response) => {
   try {
     const foundBasket = await dbClient.basket.findFirst({
       where: { user_ID },
-      include: { items: true },
+      include: {
+        items: {
+          orderBy: {
+            id: "asc",
+          },
+        },
+      },
     });
 
     res.json({ data: foundBasket });

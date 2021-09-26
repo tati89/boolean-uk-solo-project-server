@@ -16,7 +16,11 @@ exports.deleteItem = exports.addItem = exports.getAllMenu = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 const getAllMenu = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const menu = yield dbClient_1.default.item.findMany();
+        const menu = yield dbClient_1.default.item.findMany({
+            orderBy: {
+                id: "asc",
+            },
+        });
         res.json({ data: menu });
     }
     catch (error) {
