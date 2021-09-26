@@ -12,7 +12,7 @@ export default (req: Request | any, res: Response, next: NextFunction) => {
   if (payload) {
     //create new property and store payload in it
     req.currentUser = payload;
-    // req.currentUserId = (payload as any).id;
+
     //continue normal go through routes
     next();
   } else {

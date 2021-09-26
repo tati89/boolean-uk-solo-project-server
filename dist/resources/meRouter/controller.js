@@ -12,18 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const dbClient_1 = __importDefault(require("../utils/dbClient"));
-const adminAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const foundAdmin = yield dbClient_1.default.user.findUnique({
-        where: {
-            id: Number(req.currentUser.id),
-        },
-    });
-    if (foundAdmin.role === "admin") {
-        next();
+exports.getUserByCookie = void 0;
+const dbClient_1 = __importDefault(require("../../utils/dbClient"));
+const getUserByCookie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const foundInfo = yield dbClient_1.default.user.findUnique({
+            where: {
+                id: req.currentUser.id,
+            },
+            include: {
+                orders: true,
+            },
+        });
+        res.json({ data: foundInfo });
     }
-    else {
-        res.status(403).json({ error: "You're not an admin!" });
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
     }
 });
-exports.default = adminAuth;
+exports.getUserByCookie = getUserByCookie;

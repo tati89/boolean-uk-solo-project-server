@@ -30,6 +30,7 @@ export const getUserBasket = async (req: Request, res: Response) => {
     if (!foundBasket) {
       const newBasket = await dbClient.basket.create({
         data: { ...basketToCreate },
+        include: { items: true },
       });
 
       res.json({ data: newBasket });

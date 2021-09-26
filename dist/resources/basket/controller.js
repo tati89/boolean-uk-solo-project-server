@@ -40,6 +40,7 @@ const getUserBasket = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         if (!foundBasket) {
             const newBasket = yield dbClient_1.default.basket.create({
                 data: Object.assign({}, basketToCreate),
+                include: { items: true },
             });
             res.json({ data: newBasket });
         }

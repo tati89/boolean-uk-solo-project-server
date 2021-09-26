@@ -3,6 +3,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
 import { Request, Response } from "express-serve-static-core";
+import { User } from ".prisma/client";
 
 declare global {
   namespace Express {
@@ -20,7 +21,9 @@ import categoriesRouter from "./resources/categories/router";
 import basketRouter from "./resources/basket/router";
 import basketItemsRouter from "./resources/basketItems/router";
 import ordersRouter from "./resources/orders/router";
-import { User } from ".prisma/client";
+import router from "./resources/meRouter/router";
+import loginAuth from "./middlewares/loginAuth";
+import adminAuth from "./middlewares/adminAuth";
 
 var app = express();
 
@@ -35,9 +38,12 @@ app.use("/users", usersRouter);
 app.use("/items", itemsRouter);
 app.use("/categories", categoriesRouter);
 app.use(authRouter);
+app.use(loginAuth);
 app.use("/basket", basketRouter);
 app.use("/basket-items", basketItemsRouter);
+// app.use(adminAuth);
 app.use("/orders", ordersRouter);
+app.use("/me", router);
 
 app.all("*", (req: Request, res: Response) => {
   res.status(404).json("No route match");

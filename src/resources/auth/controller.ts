@@ -25,6 +25,7 @@ export const login = async (req: Request, res: Response) => {
         phone: loggedUser.phone,
         email: loggedUser.email,
         avatar: loggedUser.avatar,
+        role: loggedUser.role,
       },
     });
   } catch (error) {

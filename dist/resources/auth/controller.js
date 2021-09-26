@@ -31,6 +31,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 phone: loggedUser.phone,
                 email: loggedUser.email,
                 avatar: loggedUser.avatar,
+                role: loggedUser.role,
             },
         });
     }
