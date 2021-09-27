@@ -41,7 +41,7 @@ const getOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const orders = yield dbClient_1.default.order.findMany({
             orderBy: {
-                id: "asc",
+                id: "desc",
             },
         });
         res.status(200).json({ data: orders });
@@ -74,7 +74,7 @@ const getOrdersById = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 user_ID,
             },
             orderBy: {
-                id: "asc",
+                id: "desc",
             },
         });
         res.json({ data: orders });

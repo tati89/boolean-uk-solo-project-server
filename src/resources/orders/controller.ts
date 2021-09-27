@@ -28,7 +28,7 @@ export const getOrders = async (req: Request, res: Response) => {
   try {
     const orders = await dbClient.order.findMany({
       orderBy: {
-        id: "asc",
+        id: "desc",
       },
     });
     res.status(200).json({ data: orders });
@@ -59,7 +59,7 @@ export const getOrdersById = async (req: Request, res: Response) => {
         user_ID,
       },
       orderBy: {
-        id: "asc",
+        id: "desc",
       },
     });
     res.json({ data: orders });
