@@ -33,7 +33,7 @@ const addItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newItem = req.body;
     try {
         const added = yield dbClient_1.default.item.create({
-            data: Object.assign({}, newItem),
+            data: Object.assign(Object.assign({}, newItem), { price: Number(newItem.price), category_ID: Number(newItem.category_ID) }),
         });
         res.json({ data: added });
     }

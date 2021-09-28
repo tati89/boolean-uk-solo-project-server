@@ -17,9 +17,14 @@ export const getAllMenu = async (req: Request, res: Response) => {
 
 export const addItem = async (req: Request, res: Response) => {
   const newItem = req.body;
+
   try {
     const added = await dbClient.item.create({
-      data: { ...newItem },
+      data: {
+        ...newItem,
+        price: Number(newItem.price),
+        category_ID: Number(newItem.category_ID),
+      },
     });
     res.json({ data: added });
   } catch (error) {

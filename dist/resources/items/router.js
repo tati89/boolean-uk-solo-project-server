@@ -5,5 +5,5 @@ const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.get("/", controller_1.getAllMenu);
 router.post("/", controller_1.addItem);
-router.delete("/", controller_1.deleteItem);
+router.delete("/:id", controller_1.deleteItem);
 exports.default = router;
