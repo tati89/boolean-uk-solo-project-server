@@ -12,31 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateOrder = exports.getOrdersById = exports.deleteOrder = exports.getOrders = exports.createOrder = void 0;
+exports.updateOrder = exports.deleteOrder = exports.getOrders = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
-const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user_ID = Number(req.params.user_ID);
-    const newOrder = req.body;
-    try {
-        const basketExist = yield dbClient_1.default.basket.findFirst({
-            where: { user_ID },
-        });
-        if (basketExist) {
-            const created = yield dbClient_1.default.order.create({
-                data: Object.assign({}, newOrder),
-            });
-            res.status(201).json({ data: created });
-        }
-        else {
-            res.status(500).json({ msg: `Can't find basket with ID ${user_ID}` });
-        }
-    }
-    catch (error) {
-        console.error(error);
-        res.json({ error });
-    }
-});
-exports.createOrder = createOrder;
 const getOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const orders = yield dbClient_1.default.order.findMany({
@@ -66,25 +43,6 @@ const deleteOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.deleteOrder = deleteOrder;
-const getOrdersById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user_ID = Number(req.params.user_ID);
-    try {
-        const orders = yield dbClient_1.default.order.findMany({
-            where: {
-                user_ID,
-            },
-            orderBy: {
-                id: "desc",
-            },
-        });
-        res.json({ data: orders });
-    }
-    catch (error) {
-        console.error(error);
-        res.json({ error });
-    }
-});
-exports.getOrdersById = getOrdersById;
 const updateOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
     const info = req.body;
