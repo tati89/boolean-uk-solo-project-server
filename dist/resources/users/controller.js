@@ -12,19 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.getUser = exports.getUsers = void 0;
+exports.deleteUser = exports.getUser = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
-const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const users = yield dbClient_1.default.user.findMany();
-        res.json({ data: users });
-    }
-    catch (error) {
-        console.error(error);
-        res.json({ error });
-    }
-});
-exports.getUsers = getUsers;
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
     try {

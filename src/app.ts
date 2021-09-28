@@ -23,6 +23,8 @@ import basketItemsRouter from "./resources/basketItems/router";
 import ordersRouter from "./resources/orders/router";
 import reviewsRouter from "./resources/reviews/router";
 import userOrdersRouter from "./resources/userOrders/router";
+import customersRouter from "./resources/customers/router";
+import adminItemsRouter from "./resources/adminItems/router";
 import router from "./resources/meRouter/router";
 import loginAuth from "./middlewares/loginAuth";
 import adminAuth from "./middlewares/adminAuth";
@@ -47,6 +49,8 @@ app.use("/basket-items", basketItemsRouter);
 app.use("/user-orders", userOrdersRouter);
 
 app.use(adminAuth);
+app.use("/admin-items", adminItemsRouter);
+app.use("/customers", customersRouter);
 app.use("/orders", ordersRouter);
 app.use("/me", router);
 
