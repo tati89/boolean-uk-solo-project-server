@@ -13,6 +13,8 @@ declare global {
   }
 }
 
+const clientUrl = process.env.FRONTEND_URL;
+
 //import routes
 import usersRouter from "./resources/users/router";
 import authRouter from "./resources/auth/router";
@@ -30,11 +32,10 @@ import loginAuth from "./middlewares/loginAuth";
 import adminAuth from "./middlewares/adminAuth";
 
 var app = express();
-const clientUrl = process.env.FRONTEND_URLL;
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: `${clientUrl}`, credentials: true }));
 app.use(cookieParser());
 
 //run routes
