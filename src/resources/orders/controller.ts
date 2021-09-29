@@ -31,7 +31,6 @@ export const deleteOrder = async (req: Request, res: Response) => {
 export const updateOrder = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const info = req.body;
-  console.log(info);
 
   try {
     const foundOrder = await dbClient.order.findUnique({

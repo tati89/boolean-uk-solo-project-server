@@ -30,6 +30,7 @@ import loginAuth from "./middlewares/loginAuth";
 import adminAuth from "./middlewares/adminAuth";
 
 var app = express();
+const clientUrl = process.env.FRONTEND_URLL;
 
 app.use(logger("dev"));
 app.use(express.json());

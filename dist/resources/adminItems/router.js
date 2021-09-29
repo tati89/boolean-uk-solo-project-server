@@ -5,4 +5,5 @@ const constroller_1 = require("./constroller");
 const router = (0, express_1.Router)();
 router.post("/", constroller_1.addItem);
 router.delete("/:id", constroller_1.deleteItem);
+router.patch("/:id", constroller_1.updateItem);
 exports.default = router;

@@ -23,6 +23,7 @@ const router_12 = __importDefault(require("./resources/meRouter/router"));
 const loginAuth_1 = __importDefault(require("./middlewares/loginAuth"));
 const adminAuth_1 = __importDefault(require("./middlewares/adminAuth"));
 var app = (0, express_1.default)();
+const clientUrl = process.env.FRONTEND_URLL;
 app.use(logger("dev"));
 app.use(express_1.default.json());
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));

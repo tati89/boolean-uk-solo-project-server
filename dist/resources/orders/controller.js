@@ -46,7 +46,6 @@ exports.deleteOrder = deleteOrder;
 const updateOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
     const info = req.body;
-    console.log(info);
     try {
         const foundOrder = yield dbClient_1.default.order.findUnique({
             where: { id },
