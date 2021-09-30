@@ -32,3 +32,28 @@ export const deleteUser = async (req: Request, res: Response) => {
     res.json({ error });
   }
 };
+
+export const updateUser = async (req: Request, res: Response) => {
+  const id = Number(req.params.user_ID);
+  const newInfo = req.body;
+
+  try {
+    const userExist = await dbClient.user.findFirst({
+      where: { id },
+    });
+
+    if (userExist) {
+      const updated = await dbClient.user.update({
+        where: { id },
+        data: { ...newInfo },
+      });
+
+      res.status(201).json({ data: updated });
+    } else {
+      res.status(500).json({ msg: `Can't find user with ID ${id}` });
+    }
+  } catch (error) {
+    console.error(error);
+    res.json({ error });
+  }
+};
