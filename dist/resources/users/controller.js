@@ -46,10 +46,11 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.deleteUser = deleteUser;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = Number(req.params.user_ID);
+    const id = Number(req.params.id);
     const newInfo = req.body;
+    console.log(newInfo);
     try {
-        const userExist = yield dbClient_1.default.user.findFirst({
+        const userExist = yield dbClient_1.default.user.findUnique({
             where: { id },
         });
         if (userExist) {

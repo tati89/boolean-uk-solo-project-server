@@ -5,6 +5,6 @@ const router = Router();
 
 router.delete("/:id", deleteUser);
 router.get("/:id", getUser);
-router.post("/:id", updateUser);
+router.patch("/:id", updateUser);
 
 export default router;
