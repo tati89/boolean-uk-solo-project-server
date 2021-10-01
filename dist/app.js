@@ -7,6 +7,8 @@ const express_1 = __importDefault(require("express"));
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
 const clientUrl = process.env.FRONTEND_URL;
 //import routes
 const router_1 = __importDefault(require("./resources/users/router"));
@@ -38,11 +40,11 @@ app.use(loginAuth_1.default);
 app.use("/basket", router_5.default);
 app.use("/basket-items", router_6.default);
 app.use("/user-orders", router_9.default);
+app.use("/me", router_12.default);
 app.use(adminAuth_1.default);
 app.use("/admin-items", router_11.default);
 app.use("/customers", router_10.default);
 app.use("/orders", router_7.default);
-app.use("/me", router_12.default);
 app.all("*", (req, res) => {
     res.status(404).json("No route match");
 });

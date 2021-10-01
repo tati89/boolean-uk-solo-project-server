@@ -4,6 +4,8 @@ var logger = require("morgan");
 const cors = require("cors");
 import { Request, Response } from "express-serve-static-core";
 import { User } from ".prisma/client";
+import { config as dotenvConfig } from "dotenv";
+dotenvConfig();
 
 declare global {
   namespace Express {
@@ -49,12 +51,12 @@ app.use(loginAuth);
 app.use("/basket", basketRouter);
 app.use("/basket-items", basketItemsRouter);
 app.use("/user-orders", userOrdersRouter);
+app.use("/me", router);
 
 app.use(adminAuth);
 app.use("/admin-items", adminItemsRouter);
 app.use("/customers", customersRouter);
 app.use("/orders", ordersRouter);
-app.use("/me", router);
 
 app.all("*", (req: Request, res: Response) => {
   res.status(404).json("No route match");
