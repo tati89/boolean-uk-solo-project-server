@@ -26,7 +26,7 @@ const adminAuth_1 = __importDefault(require("./middlewares/adminAuth"));
 var app = (0, express_1.default)();
 app.use(logger("dev"));
 app.use(express_1.default.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: `${clientUrl}`, credentials: true }));
 app.use(cookieParser());
 //run routes
 app.use("/users", router_1.default);
